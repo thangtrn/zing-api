@@ -12,10 +12,9 @@ app.use(express.urlencoded({extended: true, limit: '50mb'}));
 app.use(cors());
 
 app.use(express.static(path.join(__dirname, 'views')));
-console.log(express.static(path.join(__dirname, 'views')))
 
 app.get('/', (req, res)=> {
-    res.sendFile(path.join(__dirname + '/index.html'));
+    res.sendFile(path.join(__dirname + '/views/index.html'));
 })
 
 app.use('/api', routes);
