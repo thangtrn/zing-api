@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documents Zing Api</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+        integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <section>
+        <!--for demo wrap-->
+        <h1>ZING API</h1>
+        <div class="tbl-header">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Name</th>
+                        <th style="width: 60%">Url</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="tbl-content">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <tbody>
+                    <!-- <tr>
+                        <td style="width: 30%">Get Song</td>
+                        <td><span class="base-url"></span></td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <script>
+        const baseUrl = 'http://localhost:5000/api';
+        const endpointList = [
+            {
+                name: 'Get Song',
+                endpoint: '/songs/:id'
+            },
+            {
+                name: 'Get Detail Playlist',
+                endpoint: '/detail-playlist/:id'
+            },
+            {
+                name: 'Get Home',
+                endpoint: '/home'
+            },
+            {
+                name: 'Get Top 100',
+                endpoint: '/top-100'
+            },
+            {
+                name: 'Get Chart Home',
+                endpoint: '/chart-home'
+            },
+            {
+                name: 'Get New Release Chart',
+                endpoint: '/new-release-chart'
+            },
+            {
+                name: 'Get Song Info',
+                endpoint: '/song-info/:id'
+            },
+            {
+                name: 'Get Artist',
+                endpoint: '/artist?name={sontungmtp}'
+            },
+            {
+                name: 'Get List Song Artist',
+                endpoint: '/list-song-artist?id={IWZ9ZD8A}&page={1}&count={15}'
+            },
+            {
+                name: 'Get Lyric Song',
+                endpoint: '/lyric-song/:id'
+            },
+            {
+                name: 'Search Song',
+                endpoint: '/search?q={sontungmtp}'
+            },
+            {
+                name: 'Get List MV',
+                endpoint: '/list-mv?id={IWZ9ZD8A}&page={1}&count={15}'
+            },
+            {
+                name: 'Get Category MV',
+                endpoint: '/category-mv/:id'
+            },
+            {
+                name: 'Get Video MV',
+                endpoint: '/video-mv/:id'
+            }
+        ]
+
+
+
+        $(window).ready(() => {
+            endpointList.map((item, idx) => {
+                $('.tbl-content tbody').append(`
+                    <tr>
+                        <td style="width: 30%">${item.name}</td>
+                        <td class='copy-main' style="width: 60%" tableIdx="${idx}">${baseUrl}${item.endpoint}</td>
+                        <td><button btnIdx="${idx}" class="copy-btn">Copy</button></td>
+                    </tr>
+                `)
+            })
+
+            // console.log($('.copy-btn'))
+            $('.copy-btn').each(function (idx, item) {
+
+                item.addEventListener('click', function () {
+                    var range = document.createRange();
+                    range.selectNode(document.querySelector(`.copy-main[tableIdx="${idx}"]`));
+                    window.getSelection().removeAllRanges(); // clear current selection
+                    window.getSelection().addRange(range); // to select text
+                    document.execCommand("copy");
+                    window.getSelection().removeAllRanges();// to deselect
+                    alert("Coppy success!!")
+                })
+            })
+        })
+
+        $(window)
+            .on("load resize ", function () {
+                var scrollWidth =
+                    $(".tbl-content").width() - $(".tbl-content table").width();
+                $(".tbl-header").css({ "padding-right": scrollWidth });
+            })
+            .resize();
+    </script>
+</body>
+
+</html>
